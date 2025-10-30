@@ -1,4 +1,6 @@
-<button *ngIf="canEdit" class="edit-button" icon="edit"></button>
+@if (canEdit) {
+  <button class="edit-button" icon="edit"></button>
+}
 <div class="card" [ngStyle]="borderColor">
   <div class="background-overlay" [ngClass]="overlayClass"></div>
 

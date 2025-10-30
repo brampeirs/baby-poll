@@ -6,10 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import localeNl from '@angular/common/locales/nl-BE';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 registerLocaleData(localeNl);
 
-import { LottieModule } from 'ngx-lottie';
+import { provideLottieOptions } from 'ngx-lottie';
 import { IconService } from './services/icon.service';
 
 // Note we need a separate function as it's required
@@ -19,12 +22,14 @@ export function playerFactory() {
 }
 @NgModule({
   declarations: [AppComponent],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    LottieModule.forRoot({ player: playerFactory }),
+    provideLottieOptions({
+      player: () => player,
+    }),
   ],
   providers: [
     {
@@ -32,7 +37,7 @@ export function playerFactory() {
       useValue: 'nl-BE',
     },
     IconService,
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

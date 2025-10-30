@@ -21,7 +21,6 @@ interface PollSummary {
 
 @Component({
   selector: 'bp-overview',
-  standalone: true,
   imports: [
     CommonModule,
     ButtonComponent,
@@ -45,6 +44,10 @@ export class OverviewComponent {
 
   constructor() {
     this.pollService.loadPolls();
+
+    this.pollService.polls$.subscribe((polls) => {
+      console.log(polls);
+    });
   }
 
   trackById(index: number, poll: Poll): string {

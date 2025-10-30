@@ -1,2 +1,4 @@
-<bp-icon *ngIf="icon" [name]="icon"></bp-icon>
+@if (icon) {
+  <bp-icon [name]="icon"></bp-icon>
+}
 <ng-content></ng-content>
