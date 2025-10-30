@@ -15,7 +15,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { PollService } from 'src/app/services/poll.service';
+import { PollService } from 'src/app/services/poll_v2.service';
 import { PollPostDto } from 'src/app/services/poll.model';
 import { delayWhen, take, timer } from 'rxjs';
 import { LottieComponent, AnimationOptions } from 'ngx-lottie';
@@ -47,7 +47,7 @@ import { AnimationItem } from 'lottie-web';
 export class PollComponent implements OnInit, OnDestroy {
   pollService = inject(PollService);
   router = inject(Router);
-  navigateForward() {
+  async navigateForward() {
     if (this.isDisabled) {
       return;
     }
@@ -55,15 +55,10 @@ export class PollComponent implements OnInit, OnDestroy {
       if (this.form.valid) {
         const poll: PollPostDto = this.form.value as unknown as PollPostDto;
         this.isSubmitting = true;
-        this.pollService
-          .postPoll(poll)
-          .pipe(
-            take(1),
-            delayWhen(() => timer(1000))
-          )
-          .subscribe(() => {
-            this.router.navigate(['./']);
-          });
+        await this.pollService.postPoll(poll);
+        setTimeout(() => {
+          this.router.navigate(['./']);
+        }, 1000);
       }
     } else {
       this.currentStep = this.currentStep + 1;
