@@ -1,40 +1,50 @@
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Injectable } from '@angular/core';
+import {
+  AuthSession,
+  createClient,
+  SupabaseClient,
+} from '@supabase/supabase-js';
+import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 import { Poll, PollPostDto } from './poll.model';
-import { HttpClient } from '@angular/common/http';
-import { PollResponse } from './poll-response.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class PollService {
-  private readonly apiUrl = 'https://api.babypeirs.be';
-  private httpClient = inject(HttpClient);
+  private supabase: SupabaseClient;
+  _session: AuthSession | null = null;
+
   private readonly _polls$ = new BehaviorSubject<Poll[]>([]);
   private readonly _isRequesting$ = new BehaviorSubject<boolean>(false);
 
   public readonly polls$ = this._polls$.asObservable();
   public readonly isRequesting$ = this._isRequesting$.asObservable();
 
-  loadPolls(): void {
-    // don't set requesting if we can use cache
-    if (this.noCacheAvailable()) {
-      this._isRequesting$.next(true);
-    }
-    this.httpClient
-      .get<PollResponse<Poll>>(this.apiUrl)
-      .pipe(map((response) => response.items))
-      .subscribe((polls) => {
-        this._isRequesting$.next(false);
-        this._polls$.next(polls);
-      });
+  constructor() {
+    this.supabase = createClient(
+      environment.supabaseUrl,
+      environment.supabaseKey
+    );
+    this.initSession();
   }
 
-  postPoll(poll: PollPostDto): Observable<void> {
-    return this.httpClient.post<void>(this.apiUrl, poll);
+  get session() {
+    return this._session;
   }
 
-  private noCacheAvailable(): boolean {
-    return this._polls$.value?.length === 0;
+  async initSession() {
+    const { data } = await this.supabase.auth.getSession();
+    this._session = data.session;
+    return this._session;
+  }
+
+  async loadPolls() {
+    this._isRequesting$.next(true);
+    const { data } = await this.supabase.from('names').select('*');
+    this._polls$.next(data as Poll[]);
+    this._isRequesting$.next(false);
+  }
+
+  postPoll(poll: PollPostDto) {
+    return this.supabase.from('names').insert(poll);
   }
 }

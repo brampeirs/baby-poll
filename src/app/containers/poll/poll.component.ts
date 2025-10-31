@@ -45,23 +45,20 @@ import { AnimationItem } from 'lottie-web';
 export class PollComponent implements OnInit, OnDestroy {
   pollService = inject(PollService);
   router = inject(Router);
-  navigateForward() {
+
+  async navigateForward() {
     if (this.isDisabled) {
       return;
     }
+
     if (this.currentStep === 5) {
       if (this.form.valid) {
         const poll: PollPostDto = this.form.value as unknown as PollPostDto;
         this.isSubmitting = true;
-        this.pollService
-          .postPoll(poll)
-          .pipe(
-            take(1),
-            delayWhen(() => timer(1000))
-          )
-          .subscribe(() => {
-            this.router.navigate(['./']);
-          });
+        await this.pollService.postPoll(poll);
+        setTimeout(() => {
+          this.router.navigate(['./']);
+        }, 1000);
       }
     } else {
       this.currentStep = this.currentStep + 1;
