@@ -9,12 +9,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { IconService } from 'src/app/services/icon.service';
 import { take } from 'rxjs';
 @Component({
-  selector: 'bp-icon',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'bp-icon',
+    imports: [CommonModule],
+    templateUrl: './icon.component.html',
+    styleUrls: ['./icon.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent {
   constructor(

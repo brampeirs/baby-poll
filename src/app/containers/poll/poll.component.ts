@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import {
   FormBuilder,
@@ -23,10 +23,8 @@ import { AnimationItem } from 'lottie-web';
 
 @Component({
   selector: 'bp-poll',
-  standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     ButtonComponent,
     FormsModule,
     ReactiveFormsModule,

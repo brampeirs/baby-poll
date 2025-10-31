@@ -4,12 +4,11 @@ import { CardFieldComponent } from '../card-field/card-field.component';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'bp-card',
-  standalone: true,
-  imports: [CommonModule, CardFieldComponent, DatePipe, ButtonComponent],
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'bp-card',
+    imports: [CommonModule, CardFieldComponent, DatePipe, ButtonComponent],
+    templateUrl: './card.component.html',
+    styleUrls: ['./card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent {
   @Input() gender: 'male' | 'female' = 'male';

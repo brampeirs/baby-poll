@@ -20,18 +20,17 @@ interface PollSummary {
 }
 
 @Component({
-  selector: 'bp-overview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ButtonComponent,
-    CardComponent,
-    RouterLink,
-    SpinnerComponent,
-    ScrollingModule,
-  ],
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
+    selector: 'bp-overview',
+    imports: [
+        CommonModule,
+        ButtonComponent,
+        CardComponent,
+        RouterLink,
+        SpinnerComponent,
+        ScrollingModule,
+    ],
+    templateUrl: './overview.component.html',
+    styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
   private pollService = inject(PollService);
