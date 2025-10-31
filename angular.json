@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "baby-poll:build:production"
+              "buildTarget": "baby-poll:build:production"
             },
             "development": {
-              "browserTarget": "baby-poll:build:development"
+              "buildTarget": "baby-poll:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "baby-poll:build"
+            "buildTarget": "baby-poll:build"
           }
         },
         "test": {
