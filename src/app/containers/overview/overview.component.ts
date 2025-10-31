@@ -4,7 +4,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { RouterLink } from '@angular/router';
-import { PollService } from 'src/app/services/poll.service';
+import { PollService } from 'src/app/services/poll_v2.service';
 import { Poll } from 'src/app/services/poll.model';
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 import { Observable, filter, map } from 'rxjs';
