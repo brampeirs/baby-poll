@@ -6,33 +6,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import localeNl from '@angular/common/locales/nl-BE';
-import { HttpClientModule } from '@angular/common/http';
-registerLocaleData(localeNl);
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
-import { LottieModule } from 'ngx-lottie';
+import { provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 import { IconService } from './services/icon.service';
 
-// Note we need a separate function as it's required
-// by the AOT compiler.
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
-}
+registerLocaleData(localeNl);
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    LottieModule.forRoot({ player: playerFactory }),
-  ],
-  providers: [
-    {
-      provide: LOCALE_ID,
-      useValue: 'nl-BE',
-    },
-    IconService,
-  ],
   bootstrap: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  providers: [
+    provideLottieOptions({ player: () => player }),
+    { provide: LOCALE_ID, useValue: 'nl-BE' },
+    IconService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 })
 export class AppModule {}
