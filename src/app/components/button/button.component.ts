@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +8,7 @@ import {
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
-    imports: [CommonModule, IconComponent],
+    imports: [IconComponent],
     selector: 'button',
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],

@@ -4,13 +4,13 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconService } from 'src/app/services/icon.service';
 import { take } from 'rxjs';
 @Component({
     selector: 'bp-icon',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './icon.component.html',
     styleUrls: ['./icon.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
